@@ -31,6 +31,7 @@ end
 
 describe '#touch_in' do
   it 'starts a journey' do
+    subject.top_up(5)
     subject.touch_in
     expect(subject.in_journey?).to eq true
   end
@@ -42,7 +43,12 @@ describe '#touch_out' do
     expect(subject.in_journey?).to eq false
   end
 end
-
+context 'less than minimum amount on card' do
+  it 'raises an error on touch in' do
+    min_balance = Oystercard::MINIMUM_BALANCE
+    expect{subject.touch_in}.to raise_error("Minimum balance is £#{min_balance}")
+  end
+end
 context 'maximum balance exceeded' do
   it 'raises an error' do
     maximum_balance = Oystercard::MAXIMUM_BALANCE
@@ -50,6 +56,7 @@ context 'maximum balance exceeded' do
     expect {subject.top_up(1)}.to raise_error("Maximum balance is £#{maximum_balance}")
   end
 end
+
 
 
 
