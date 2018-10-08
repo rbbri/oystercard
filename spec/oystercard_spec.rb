@@ -12,5 +12,13 @@ describe '#top_up' do
     oystercard.top_up(5)
     expect(oystercard.balance).to eq 5
   end
+context 'maximum balance exceeded' do
+  it 'raises an error' do
+    oystercard = Oystercard.new
+    oystercard.top_up(90)
+    expect {oystercard.top_up(1)}.to raise_error("Maximum balance is £90")
+  end
+
+end
 end
 end
