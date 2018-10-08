@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Oystercard
   MAXIMUM_BALANCE = 90
-  MINIMUM_BALANCE = 1
+  MINIMUM_FARE = 1
   attr_reader :balance
   def initialize
     @balance = 0
@@ -12,23 +14,19 @@ class Oystercard
     @balance += amount
   end
 
-  def deduct(amount)
-    @balance -= amount
-  end
-
   def in_journey?
     @in_use
   end
 
   def touch_in
-    raise "Minimum balance is £#{MINIMUM_BALANCE}" if min?
+    raise "Minimum fare is £#{MINIMUM_FARE}" if min?
     @in_use = true
   end
 
   def touch_out
+    deduct(MINIMUM_FARE)
     @in_use = false
   end
-
 
   private
 
@@ -37,7 +35,12 @@ class Oystercard
   end
 
   def min?
-    @balance <= MINIMUM_BALANCE
+    @balance <= MINIMUM_FARE
   end
+
+  def deduct(amount)
+    @balance -= amount
+  end
+
 
 end
