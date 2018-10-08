@@ -9,8 +9,15 @@ class Oystercard
     raise "Maximum balance is £#{MAXIMUM_BALANCE}" if max?
     @balance += amount
   end
+
+  def deduct(amount)
+    @balance -= amount
+  end
+
   private
+
   def max?
     @balance >= MAXIMUM_BALANCE
   end
+
 end
