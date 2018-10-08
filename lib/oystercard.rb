@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# Describes the payment card
+
 class Oystercard
   MAXIMUM_BALANCE = 90
   MINIMUM_FARE = 1
@@ -14,6 +16,7 @@ class Oystercard
 
   def top_up(amount)
     raise "Maximum balance is £#{MAXIMUM_BALANCE}" if max?
+
     @balance += amount
   end
 
@@ -23,12 +26,13 @@ class Oystercard
 
   def touch_in(station)
     raise "Minimum fare is £#{MINIMUM_FARE}" if min?
-    set_entry(station)
+
+    enter(station)
   end
 
   def touch_out(station)
     deduct(MINIMUM_FARE)
-    set_exit(station)
+    exit(station)
     save_journey
   end
 
@@ -47,16 +51,15 @@ class Oystercard
   end
 
   def save_journey
-    @journeys << {entry_station: @entry_station, exit_station: @exit_station}
+    @journeys << { entry_station: @entry_station, exit_station: @exit_station }
     @entry_station = nil
   end
 
-  def set_entry(station)
+  def enter(station)
     @entry_station = station
   end
 
-  def set_exit(station)
+  def exit(station)
     @exit_station = station
   end
-
 end
