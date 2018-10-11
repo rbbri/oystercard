@@ -6,4 +6,5 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 group :test, :development do
   gem 'rspec'
+  gem 'rspec_yah_formatter', '~> 0.0.7'
 end
