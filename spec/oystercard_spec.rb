@@ -14,11 +14,11 @@ describe Oystercard do
   end
 
   describe '#Touch_in' do
-    # xit 'starts a journey' do
-    #   subject.top_up(5)
-    #   subject.touch_in(station)
-    #   expect(subject.in_journey?).to eq true
-    # end
+    it 'starts a journey' do
+      subject.top_up(5)
+      subject.touch_in(station)
+      expect(subject.current_journey).to_not eq nil
+    end
     it 'remembers the entry station' do
       subject.top_up(5)
       subject.touch_in(station)
